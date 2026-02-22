@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN Sport Panel | مدیریت فروش</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div id="login-section" class="login-overlay">
+        <div class="login-card">
+            <h2>ورود به پنل <span class="blue-text">اسپورت</span></h2>
+            <input type="text" id="admin-user" placeholder="نام کاربری">
+            <input type="password" id="admin-pass" placeholder="رمز عبور">
+            <button onclick="login()" class="btn-glow">ورود</button>
+        </div>
+    </div>
+
+    <div id="main-panel" style="display: none;">
+        <header class="main-header">
+            <div class="user-info">
+                <h1>خوش آمدی، <span id="admin-name" class="blue-text"></span></h1>
+            </div>
+            <button onclick="logout()" class="btn-outline">خروج</button>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat-item">تعداد کل فروش: <span id="total-count">۰</span></div>
+            <div class="stat-item">سود کل: <span id="total-profit" class="blue-text">۰</span> تومان</div>
+        </div>
+
+        <main class="grid-container">
+            <section class="card glass-effect">
+                <h3>ثبت فروش جدید</h3>
+                <div class="input-group">
+                    <input type="text" id="client-name" placeholder="نام مشتری">
+                    <input type="number" id="sale-volume" placeholder="حجم (گیگابایت)" oninput="calcPurchase()">
+                    <input type="number" id="sale-amount" placeholder="قیمت فروش (تومان)">
+                    
+                    <div class="info-box">
+                        قیمت خرید: <span id="purchase-price-display">۰</span> تومان
+                    </div>
+
+                    <select id="sale-month">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                    <button onclick="addSale()" class="btn-glow">ثبت تراکنش</button>
+                </div>
+            </section>
+
+            <section class="card glass-effect">
+                <h3>آنالیز ماهانه</h3>
+                <canvas id="salesChart"></canvas>
+            </section>
+
+            <section class="card glass-effect wide-card">
+                <h3>گزارش فروش</h3>
+                <div class="table-wrapper" id="report-container">
+                    </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

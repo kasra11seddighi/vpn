@@ -1,0 +1,138 @@
+/* تنظیمات کلی فونت و رنگ */
+:root {
+    --bg-color: #0d0d0d;
+    --card-bg: #1a1a1a;
+    --blue-neon: #007bff;
+    --blue-dark: #0056b3;
+    --text-color: #ffffff;
+    --glass: rgba(255, 255, 255, 0.05);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.blue-text { color: var(--blue-neon); font-weight: bold; }
+
+/* Glassmorphism Effect */
+.glass-effect {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.wide-card { grid-column: 1 / -1; }
+
+input, select {
+    background: #252525;
+    border: 1px solid #333;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input:focus { border-color: var(--blue-neon); outline: none; }
+
+.btn-glow {
+    background: linear-gradient(45deg, var(--blue-neon), var(--blue-dark));
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.btn-glow:hover { box-shadow: 0 0 15px var(--blue-neon); transform: translateY(-2px); }
+
+.info-box {
+    background: rgba(0, 123, 255, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    border-right: 4px solid var(--blue-neon);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th { background: #252525; color: var(--blue-neon); padding: 12px; text-align: right; }
+td { padding: 12px; border-bottom: 1px solid #333; }
+
+.stats-bar {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.stat-item {
+    background: var(--card-bg);
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 1px solid var(--blue-neon);
+}
+.btn-delete {
+    background: rgba(255, 68, 68, 0.2);
+    color: #ff4444;
+    border: 1px solid #ff4444;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.btn-delete:hover {
+    background: #ff4444;
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+/* اصلاح برای موبایل‌های کوچک */
+@media (max-width: 400px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* کارت‌ها کاملاً تمام‌عرض شوند */
+    }
+
+    .stat-item {
+        font-size: 13px; /* کوچک‌تر شدن فونت آمار در موبایل */
+        padding: 8px 12px;
+    }
+
+    .stats-bar {
+        flex-direction: column; /* آمار به جای کنار هم، زیر هم نمایش داده شوند */
+        gap: 10px;
+    }
+}
+
+/* حل مشکل اسکرول جدول در موبایل */
+.table-wrapper {
+    overflow-x: auto; /* اگر جدول بزرگ بود، فقط خودش اسکرول بخورد نه کل صفحه */
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    min-width: 600px; /* اجازه بده جدول عرض کافی داشته باشد تا ستون‌ها مچاله نشوند */
+}
