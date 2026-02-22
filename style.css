@@ -24,6 +24,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 15px;
     padding: 20px;
+    margin: 1rem;
+    min-width: 25rem;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
 
@@ -129,10 +131,163 @@ td { padding: 12px; border-bottom: 1px solid #333; }
 
 /* حل مشکل اسکرول جدول در موبایل */
 .table-wrapper {
-    overflow-x: auto; /* اگر جدول بزرگ بود، فقط خودش اسکرول بخورد نه کل صفحه */
+    /* overflow-x: auto; اگر جدول بزرگ بود، فقط خودش اسکرول بخورد نه کل صفحه */
     -webkit-overflow-scrolling: touch;
+    
+}
+.tradmin{
+    padding: 0;
+}
+table {
+    min-width: 400px; /* اجازه بده جدول عرض کافی داشته باشد تا ستون‌ها مچاله نشوند */
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+.logo{
+    width: 3.5rem;
+    height: 3.5rem;
+    border: radius 50%; ;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50% ;
+    -ms-border-radius:50% ;
+    -o-border-radius:50% ;
+    -webkit-border-radius:50% ;
+    border: 2px solid darkred;
+    
+}
+.btn-outline{
+width: 5rem;
+border: 3px dotted rgb(0, 169, 242);
+height: 3rem;
+background-color: blue;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.btn-outline:hover{
+    background-color: darkblue;
+    color: firebrick;
+}
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(1);
 }
 
-table {
-    min-width: 600px; /* اجازه بده جدول عرض کافی داشته باشد تا ستون‌ها مچاله نشوند */
+.badge {
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+.gold { background: #ffd700; color: #000; }
+.blue { background: #007bff; color: #fff; }
+.status-online { color: #00ff00; font-size: 12px; }
+/* کلاسی برای مخفی‌سازی قطعی */
+.hidden {
+    display: none !important;
+}
+
+.main-top{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* =============================================
+   بخش مدیریت ریسپانسیو با مدیا کوئری
+   ============================================= */
+
+/* ۱. تنظیمات پیش‌فرض برای موبایل (Mobile-First) */
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.main-top {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.glass-effect {
+    min-width: 100% !important; /* لغو مقدار 25rem قبلی */
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.stats-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* دو ستونه در موبایل */
+    gap: 10px;
+}
+
+.stat-item {
+    font-size: 12px;
+    padding: 10px 5px;
+    text-align: center;
+}
+
+/* ۲. تبلت و موبایل‌های بزرگ (صفحات بزرگتر از 600px) */
+@media screen and (min-width: 600px) {
+    .stat-item {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+/* ۳. لپ‌تاپ و تبلت‌های افقی (صفحات بزرگتر از 768px) */
+@media screen and (min-width: 768px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .main-top {
+        display: contents; /* اجازه می‌دهد کارت‌های داخلی فرزند مستقیم گرید شوند */
+    }
+
+    .wide-card {
+        grid-column: 1 / -1;
+    }
+
+    .stats-bar {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .stat-item {
+        flex: 0 1 auto;
+    }
+}
+
+/* ۴. دسکتاپ‌های بزرگ (صفحات بزرگتر از 1024px) */
+@media screen and (min-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr); /* سه ستونه شدن پنل */
+    }
+
+    /* کارت ثبت فروش و آنالیز در یک ردیف، گزارش در ردیف بعد */
+    section:nth-child(1) { grid-column: span 1; }
+    section:nth-child(2) { grid-column: span 2; }
+}
+
+/* ۵. مدیریت جدول در تمام سایزها */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto; /* اسکرول افقی فقط برای جدول */
+    border-radius: 12px;
+}
+
+@media screen and (max-width: 768px) {
+    table {
+        min-width: 500px; /* جلوگیری از له شدن ستون‌ها */
+    }
+    
+    td, th {
+        padding: 8px;
+        font-size: 13px;
+    }
 }

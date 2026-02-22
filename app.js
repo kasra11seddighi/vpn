@@ -1,32 +1,76 @@
 const ANON_KEY = "sb_publishable_Ts2s7pcc7L8cYTk2odBP3w_dc0vn3-n";
 const BASE_URL = "https://aclhknqvqbcqekqxdpdj.supabase.co/rest/v1";
 let myChart = null;
-
+const cardGlassEffect =document.querySelector(".card glass-effect")
 // --- مدیریت نمایش پنل بر اساس نقش کاربر ---
 function renderDashboard(user) {
+    // ۱. نمایش پنل اصلی
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('main-panel').style.display = 'block';
     document.getElementById('admin-name').innerText = user.name;
 
-    // پیدا کردن بخش‌های مختلف برای مدیریت دسترسی
     const statsBar = document.querySelector('.stats-bar');
-    const sections = document.querySelectorAll('.grid-container section'); 
-    // بخش‌های گرید: 0=ثبت فروش، 1=آنالیز، 2=گزارش فروش
+    const allSections = document.querySelectorAll('.grid-container section');
 
-    if (user.role === 'admin') {
-        // اگر ادمین بود: نوار آمار، نمودار و جدول گزارش رو مخفی کن
-        if (statsBar) statsBar.style.display = 'none';
-        if (sections[1]) sections[1].style.display = 'none'; // آنالیز ماهانه مخفی
-        if (sections[2]) sections[2].style.display = 'none'; // گزارش فروش مخفی
-        
-        // فرم ثبت فروش رو تمام‌عرض کن که زشت نباشه
-        if (sections[0]) sections[0].style.gridColumn = "1 / -1";
-    } else {
-        // اگر سوپرادمین بود: همه‌چیز رو نشون بده
-        if (statsBar) statsBar.style.display = 'flex';
-        sections.forEach(s => s.style.display = 'block');
-        // لود کردن دیتا فقط برای سوپرادمین
-        loadDataFromDatabase();
+    // چک کردن دقیق نقش کاربر (حذف فضاهای خالی و تبدیل به حروف کوچک)
+    const userRole = user.role.toLowerCase().trim();
+
+    if (userRole === 'admin') {
+        // مخفی کردن نوار آمار
+        if (statsBar) statsBar.classList.add("hidden")
+
+        allSections.forEach(section => {
+            const title = section.querySelector('h3') ? section.querySelector('h3').innerText : "";
+            
+            if (title.includes("ثبت فروش")) {
+                // این بخش بماند و تمام عرض شود
+                section.style.display = 'block';
+                section.style.gridColumn = "1 / -1";
+            } else {
+                // بقیه بخش‌ها (آنالیز و گزارش) مخفی شوند
+                section.style.setProperty('display', 'none', 'important');
+            }
+        });
+     // ... داخل تابع renderDashboard ...
+} else {
+    // حالت سوپرادمین
+    if (statsBar) statsBar.style.display = 'flex';
+    allSections.forEach(section => {
+        section.style.display = 'block';
+        section.style.gridColumn = ""; 
+    });
+    
+    // این دو خط را حتماً اضافه کن:
+    const adminSection = document.getElementById('admin-management-section');
+    if (adminSection) adminSection.style.display = 'block'; 
+    
+    loadDataFromDatabase();
+    loadAdminsList(); // صدا زدن تابع لود ادمین‌ها
+    }
+}
+
+async function loadAdminsList() {
+    const tbody = document.getElementById('admins-list');
+    if (!tbody) return; // اگر المان در HTML نبود، خارج شو
+
+    // آدرس جدول یوزرها (نام جدول را طبق دیتابیس خودت که در تابع login استفاده کردی تنظیم کن)
+    const url = `${BASE_URL}/users?select=*`; 
+
+    try {
+        const res = await fetch(url, { 
+            headers: { "apikey": ANON_KEY, "Authorization": `Bearer ${ANON_KEY}` } 
+        });
+        const admins = await res.json();
+
+        tbody.innerHTML = admins.map(admin => `
+            <tr>
+                <td>${admin.name}</td>
+                <td><span class="badge ${admin.role === 'superadmin' ? 'gold' : 'blue'}">${admin.role}</span></td>
+                <td><span class="status-online">● فعال</span></td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        console.error("خطا در لود لیست ادمین‌ها:", err);
     }
 }
 
