@@ -291,3 +291,13 @@ button:disabled {
         font-size: 13px;
     }
 }
+.search-box {
+    margin-bottom: 15px;
+    padding: 10px !important;
+}
+
+#search-input {
+    margin-bottom: 0; /* حذف فاصله اضافی */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--blue-neon);
+}
