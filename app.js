@@ -97,8 +97,8 @@ function filterAdminSales() {
 
     // ۲. محاسبه سود کل بازه فیلتر شده
     const totalProfit = filtered.reduce((sum, s) => {
-        const rowProfit = s.amount - (s.purchase_price || (s.volume * 1200));
-        return sum + rowProfit;
+        const rowProfit = (s.amount - (s.purchase_price || (s.volume * 1200))) * 70 / 100 ;
+        return sum + rowProfit ;
     }, 0);
 
     if (profitDisplay) {
@@ -130,7 +130,7 @@ function filterAdminSales() {
 
     filtered.forEach(s => {
         // محاسبه سود ردیف
-        const rowProfit = s.amount - (s.purchase_price || (s.volume * 1200));
+        const rowProfit = (s.amount - (s.purchase_price || (s.volume * 1200))) * 70 / 100 ;
         
         // --- منطق اصلی وضعیت پرداخت ---
         // چک می‌کنیم اگر مقدار is_paid در دیتابیس true بود

@@ -301,3 +301,21 @@ button:disabled {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--blue-neon);
 }
+.login-card{
+    width: 20rem;
+    height: 16rem;
+    background-color: #333;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    padding: 1rem;
+}
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8rem;
+
+}
